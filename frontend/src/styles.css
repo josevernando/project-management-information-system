@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #111827;
+  --color-panel: #1f2937;
+}
+
+@layer base {
+  :root { color-scheme: dark; }
+  body.dark {
+    @apply bg-bg text-white;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-panel border border-gray-800 rounded-xl p-4 shadow-sm;
+  }
+}
