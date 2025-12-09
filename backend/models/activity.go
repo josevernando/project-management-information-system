@@ -10,4 +10,5 @@ type Activity struct {
 	ProjectID   *uint     `json:"project_id"`
 	TaskID      *uint     `json:"task_id"`
 	CreatedAt   time.Time `json:"created_at"`
+	EmployeeID  uint      `json:"employee_id"`
 }

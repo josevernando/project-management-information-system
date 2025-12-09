@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "../../services/api";
 
 const ActivityForm = () => {
   const [formData, setFormData] = useState({
@@ -29,70 +30,74 @@ const ActivityForm = () => {
       task_id: formData.task_id ? parseInt(formData.task_id) : null,
     };
 
-    const res = await fetch("http://localhost:8080/api/activities", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
+    try {
+      // Use axios API client with JWT automatically included
+      const res = await api.post("/activities", payload);
       alert("Activity saved!");
-    } else {
-      alert("Failed: " + JSON.stringify(data));
+
+      // reset form
+      setFormData({
+        description: "",
+        hours_spent: "",
+        billable: false,
+        project_id: "",
+        task_id: "",
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Failed to save activity");
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-      {/* Description */}
       <textarea
         name="description"
         placeholder="What did you do?"
         className="border p-2 rounded bg-white dark:bg-neutral-900 dark:border-neutral-700 text-gray-900 dark:text-gray-100"
+        value={formData.description}
         onChange={handleChange}
         required
       />
 
-      {/* Hours Spent */}
       <input
         name="hours_spent"
         type="number"
         step="0.1"
         placeholder="Hours spent"
         className="border p-2 rounded bg-white dark:bg-neutral-900 dark:border-neutral-700 text-gray-900 dark:text-gray-100"
+        value={formData.hours_spent}
         onChange={handleChange}
         required
       />
 
-      {/* Billable */}
       <label className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
         <input
           type="checkbox"
           name="billable"
+          checked={formData.billable}
           onChange={handleChange}
           className="w-4 h-4"
         />
         Billable?
       </label>
 
-      {/* Project ID */}
       <input
         name="project_id"
         type="number"
         placeholder="Project ID (optional)"
         className="border p-2 rounded bg-white dark:bg-neutral-900 dark:border-neutral-700 text-gray-900 dark:text-gray-100"
+        value={formData.project_id}
         onChange={handleChange}
       />
 
-      {/* Task ID */}
       <input
         name="task_id"
         type="number"
         placeholder="Task ID (optional)"
         className="border p-2 rounded bg-white dark:bg-neutral-900 dark:border-neutral-700 text-gray-900 dark:text-gray-100"
+        value={formData.task_id}
         onChange={handleChange}
       />
 
@@ -104,3 +109,4 @@ const ActivityForm = () => {
 };
 
 export default ActivityForm;
+

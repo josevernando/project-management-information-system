@@ -3,6 +3,7 @@ package routes
 import (
 	"pmis-backend/controllers"
 	"pmis-backend/middleware"
+	"pmis-backend/ai"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,6 +33,10 @@ func SetupRoutes(router *gin.Engine) {
 
 		api.GET("/employees", controllers.GetEmployees)
 
+		api.GET("/profile", controllers.GetCurrentEmployee)
+
 		api.GET("/summary", controllers.GetSummary)
+
+		api.POST("/ai/summary-docx", ai.GenerateSummaryDocxHandler)
 	}
 }

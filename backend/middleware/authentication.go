@@ -35,9 +35,17 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 
-		// Optional: store token claims in context
 		if claims, ok := token.Claims.(jwt.MapClaims); ok {
 			c.Set("claims", claims)
+
+			// Extract user_id from JWT
+			if uid, ok := claims["id"].(float64); ok {
+				c.Set("user_id", uint(uid))
+			} else {
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token payload"})
+				c.Abort()
+				return
+			}
 		}
 
 		c.Next()
