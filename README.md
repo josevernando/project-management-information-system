@@ -55,14 +55,18 @@ This MVP includes task management, project tracking, employee management, AI-gen
 cd backend
 go mod tidy
 go run main.go
+```
 
 ### **To run Ollama**
 ```bash
+To run Ollama
 ollama pull llama3.1
 ollama serve
+```
 
 ### **Frontend Setup**
 ```bash
 cd frontend
 npm install
 npm run dev
+```
