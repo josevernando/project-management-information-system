@@ -57,10 +57,12 @@ go mod tidy
 go run main.go
 
 ### **To run Ollama**
+```bash
 ollama pull llama3.1
 ollama serve
 
 ### **Frontend Setup**
+```bash
 cd frontend
 npm install
 npm run dev
