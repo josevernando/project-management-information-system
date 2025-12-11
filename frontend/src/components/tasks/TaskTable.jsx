@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import api from '../../services/api'
+import TaskStatusDropdown from "../tasks/TaskStatusDropdown";
 
 export default function TaskTable(){
   const [tasks, setTasks] = useState([])
@@ -20,7 +21,7 @@ export default function TaskTable(){
               <td className="py-3">{t.title}</td>
               <td className="py-3">{t.assignee_id}</td>
               <td className="py-3">{t.due_date ? new Date(t.due_date).toLocaleDateString(): '-'}</td>
-              <td className="py-3">{t.status}</td>
+              <td className="py-3"><TaskStatusDropdown task={t} /></td>
             </tr>
           ))}
         </tbody>

@@ -1,4 +1,5 @@
 import React from "react";
+import ProjectStatusDropdown from "../projects/ProjectStatusDropdown";
 
 export default function ProjectTable({ projects }) {
   return (
@@ -17,7 +18,7 @@ export default function ProjectTable({ projects }) {
             <tr key={p.id} className="border-t border-gray-800">
               <td className="py-3">{p.name}</td>
               <td>{p.client || "-"}</td>
-              <td>{p.status}</td>
+              <td><ProjectStatusDropdown project={p} /></td>
               <td>{p.base_rate ? p.base_rate : "-"}</td>
             </tr>
           ))}

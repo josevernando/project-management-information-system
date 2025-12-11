@@ -39,4 +39,15 @@ func SetupRoutes(router *gin.Engine) {
 
 		api.POST("/ai/summary-docx", ai.GenerateSummaryDocxHandler)
 	}
+
+	taskRoutes := router.Group("/api/tasks")
+	{
+    		taskRoutes.PUT("/:id/status", controllers.UpdateTaskStatus)
+	}
+
+	projectRoutes := router.Group("/api/projects")
+	{
+    		projectRoutes.PUT("/:id/status", controllers.UpdateProjectStatus)
+	}
+
 }

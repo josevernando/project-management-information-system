@@ -1,30 +1,34 @@
-// TaskStatusDropdown.jsx
-import { useState } from "react";
+import React, { useState } from "react";
+import { updateTaskStatus } from "../../services/taskService";
 
-export default function TaskStatusDropdown({ task, onChange }) {
+const STATUS_OPTIONS = [
+  { value: "todo", label: "To Do" },
+  { value: "in_progress", label: "In Progress" },
+  { value: "review", label: "Review" },
+  { value: "done", label: "Done" },
+];
+
+export default function TaskStatusDropdown({ task }) {
   const [status, setStatus] = useState(task.status);
 
-  const statuses = [
-    "TO_DO",
-    "IN_PROGRESS",
-    "BLOCKED",
-    "IN_REVIEW",
-    "DONE"
-  ];
+  const handleChange = async (e) => {
+    const newStatus = e.target.value;
+    setStatus(newStatus);
 
-  const handleChange = (e) => {
-    setStatus(e.target.value);
-    onChange(e.target.value);
+    await updateTaskStatus(task.id, newStatus);
   };
 
   return (
-    <select value={status} onChange={handleChange} className="border rounded p-1">
-      {statuses.map((s) => (
-        <option key={s} value={s}>
-          {s.replace("_", " ")}
+    <select
+      value={status}
+      onChange={handleChange}
+      className="bg-gray-800 text-sm rounded px-2 py-1 border border-gray-700"
+    >
+      {STATUS_OPTIONS.map((s) => (
+        <option key={s.value} value={s.value}>
+          {s.label}
         </option>
       ))}
     </select>
   );
 }
-
