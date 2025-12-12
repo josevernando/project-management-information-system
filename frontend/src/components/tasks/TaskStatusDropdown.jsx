@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { updateTaskStatus } from "../../services/taskService";
 
 const STATUS_OPTIONS = [
-  { value: "todo", label: "To Do" },
-  { value: "in_progress", label: "In Progress" },
-  { value: "review", label: "Review" },
-  { value: "done", label: "Done" },
+  { value: "To Do", label: "To Do" },
+  { value: "In Progress", label: "In Progress" },
+  { value: "Review", label: "Review" },
+  { value: "Done", label: "Done" },
 ];
 
 export default function TaskStatusDropdown({ task }) {

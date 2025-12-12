@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { updateProjectStatus } from "../../services/projectService";
 
 const PROJECT_STATUS_OPTIONS = [
-  { value: "active", label: "Planned" },
-  { value: "paused", label: "In Progress" },
-  { value: "completed", label: "Completed" },
+  { value: "Active", label: "Active" },
+  { value: "Planned", label: "Planned" },
+  { value: "Completed", label: "Completed" },
 ];
 
 export default function ProjectStatusDropdown({ project }) {
