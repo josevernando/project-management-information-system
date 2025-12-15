@@ -10,7 +10,7 @@ export default function EmployeeTable() {
 
   async function fetchEmployees() {
     try {
-      const res = await api.get("/employees")   // ✅ Correct endpoint
+      const res = await api.get("/employees")
       setUsers(res.data)
     } catch (e) {
       console.error("Failed to load employees", e)
@@ -26,6 +26,7 @@ export default function EmployeeTable() {
             <th>Dept</th>
             <th>Position</th>
             <th>Email</th>
+	    <th>Id</th>
           </tr>
         </thead>
 
@@ -36,6 +37,7 @@ export default function EmployeeTable() {
               <td>{u.department}</td>
               <td>{u.position}</td>
               <td>{u.email}</td>
+	      <td>{u.id}</td>
             </tr>
           ))}
         </tbody>
@@ -43,4 +45,3 @@ export default function EmployeeTable() {
     </div>
   )
 }
-

@@ -11,6 +11,7 @@ export default function ProjectTable({ projects }) {
             <th>Client</th>
             <th>Status</th>
             <th>Rate</th>
+	    <th>Id</th>
           </tr>
         </thead>
         <tbody>
@@ -20,6 +21,7 @@ export default function ProjectTable({ projects }) {
               <td>{p.client || "-"}</td>
               <td><ProjectStatusDropdown project={p} /></td>
               <td>{p.base_rate ? p.base_rate : "-"}</td>
+	      <td>{p.id}</td>
             </tr>
           ))}
         </tbody>

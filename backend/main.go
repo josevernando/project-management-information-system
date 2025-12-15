@@ -11,7 +11,7 @@ import (
 func main() {
 	config.ConnectDB()
 
-	// Auto migrate tables
+	// Table Migration
 	config.DB.AutoMigrate(
 		&models.Project{},
 		&models.Task{},
@@ -22,18 +22,18 @@ func main() {
 	r := gin.Default()
 
 	r.Use(func(c *gin.Context) {
-	    c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-    	    c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-    	    c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-    	    c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 
-    	    // Handle preflight
-    	    if c.Request.Method == "OPTIONS" {
-                c.AbortWithStatus(200)
-                return
-   	    }
+		// Handle preflight
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(200)
+			return
+		}
 
-    	    c.Next()
+		c.Next()
         })
 
 	routes.SetupRoutes(r)
