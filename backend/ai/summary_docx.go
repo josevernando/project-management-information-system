@@ -1,6 +1,7 @@
 package ai
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -32,7 +33,7 @@ func GenerateSummaryDocxFile(summary string) (string, error) {
 
 	// Replace placeholders
 	doc.Replace("{{DATE}}", time.Now().Format("02 Jan 2006"), -1)
-	doc.Replace("{{SUMMARY}}", summary, -1)
+	doc.Replace("{{TABLE}}", summary, -1)
 
 	// Save file
 	err = doc.WriteToFile(outputPath)
@@ -53,24 +54,30 @@ func GenerateSummaryDocxHandler(c *gin.Context) {
 		return
 	}
 
-	rawActivities := ""
+	table := ""
 	for _, a := range activities {
-		rawActivities += "- " + a.Description + "\n"
+
+	    improved := a.Description
+	    rewritten, err := GenerateNarrativeSummary(a.Description)
+	    if err == nil && rewritten != "" {
+		improved = rewritten
+	    }
+
+	    table += fmt.Sprintf(
+		"%s | %s\n",
+		a.CreatedAt.Format("02 Jan 2006"),
+		improved,
+	    )
 	}
 
-	narrative, err := GenerateNarrativeSummary(rawActivities)
-	if err != nil {
-		c.JSON(500, gin.H{"error": "AI summary generation failed"})
-		return
-	}
-
-	filePath, err := GenerateSummaryDocxFile(narrative)
-
+	// Generate DOCX file
+	filePath, err := GenerateSummaryDocxFile(table)
 	if err != nil {
 		log.Println("[DOCX ERROR]", err.Error())
 		c.JSON(500, gin.H{"error": "Failed to generate DOCX"})
 		return
 	}
 
+	// Send file
 	c.FileAttachment(filePath, "summary.docx")
 }
